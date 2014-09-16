@@ -5,7 +5,7 @@ Summary: A small program to generate simple ASCII mazes.
 
 ## Installation
 
-Download from https://github.com/triposorbust/maze-maker. Recommended installation via leiningen.
+Download from [Github repo](https://github.com/triposorbust/maze-maker). Recommended installation via leiningen.
 
 ```
 % lein deps
