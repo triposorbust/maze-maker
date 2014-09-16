@@ -1,6 +1,6 @@
-# maze-maker
+# Maize Maker: What could be more corny?
 
-DESCRIPTION: A small program to generate simple ASCII mazes.
+Summary: A small program to generate simple ASCII mazes.
 
 
 ## Installation
@@ -28,7 +28,7 @@ $ java -jar maze-maker-0.1.0-standalone.jar [options]
 Options on command line specify size and generating algorithm.
 
 ```
-% java -jar target/uberjar/maze-maker-0.1.0-standalone.jar -- --help
+% java -jar target/uberjar/maze-maker-0.1.0-standalone.jar --help
 Utility program for generating arena maps.
 
 Usage: maze-maker [options]
