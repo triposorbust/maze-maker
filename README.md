@@ -43,7 +43,44 @@ Refer to docs for more details.
 ```
 
 
-### Bugs
+## Examples
+
+An example of `rand` generating algorithm:
+
+```
+% lein run -- --type rand
+o oo o       g  o oo 
+ o                  o
+o      oo o          
+ o    o     o    o oo
+ o  o o   oo   o     
+   o    o o       o  
+        o     o      
+          o        oo
+s    o    o o   oo   
+o  o         o       
+       o o o         
+```
+
+And `dfs` (backtracking Depth-First Search):
+
+```
+% lein run -- --type dfs
+       o             
+oooo o o ooooo o oooo
+   oso o   o   o o   
+ o ooo ooo o ooooo o 
+ o o   o   o   o   o 
+ o o o o ooooo o ooo 
+ o   o o     o     o 
+ ooooo ooooo ooooo o 
+ o   o o     o   o o 
+ o o ooo ooooo o ooo 
+   o          go     
+```
+
+
+## Bugs
 
  - Mazes not _guaranteed_ to have a path from `s` to `g`.
  - Could use a nice refactor in a couple of days.
