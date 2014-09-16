@@ -10,7 +10,7 @@ Download from https://github.com/triposorbust/maze-maker. Recommended installati
 ```
 % lein deps
 % lein uberjar
-% java -jar target/uberjar/maze-maker-0.1.0-standalone.jar -- --help
+% java -jar target/uberjar/maze-maker-0.1.0-standalone.jar --help
 ```
 
 
