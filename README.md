@@ -36,7 +36,7 @@ Usage: maze-maker [options]
 Options:
   -x, --width N   21     Width of arena
   -y, --height M  11     Height of arena
-  -t, --type STR  :rand  Generating algorithm ("dfs" or "rand")
+  -t, --type STR  :rand  Generating algorithm ("dfs", "dla", "rand")
   -h, --help
 
 Refer to docs for more details.
@@ -60,6 +60,23 @@ o      oo o
 s    o    o o   oo   
 o  o         o       
        o o o         
+```
+
+The `dla` (diffusion simulation) algorithm:
+
+```
+% lein run -- --type dla
+  s       ooooooo    
+        o  ooo oooooo
+      oooooo o  o    
+      o o o  o  oo   
+          oooo  ooo  
+         oo       o  
+          o          
+          o  g       
+          o          
+                     
+                     
 ```
 
 And `dfs` (backtracking Depth-First Search):

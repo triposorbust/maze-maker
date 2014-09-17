@@ -118,6 +118,46 @@
     { :width w :height h :exit exit :wall wall :init init }))
 
 ;;
+;; DLA: Diffusion-limited aggregation
+;;
+
+(defn- rand-dla-seed [b wall]
+  (let [opt (set/difference
+             (set (for [x (range (:width  b))
+                        y (range (:height b))]
+                    [x y]))
+             wall)]
+    (rand-nth (seq opt))))
+
+(defn- build-dla-wall 
+  ([b n]
+     (let [init-wall (rand-dla-seed b #{})
+           init-cell (rand-dla-seed b #{init-wall})]
+       (build-dla-wall b init-cell #{init-wall} n)))
+  ([b p wall n]
+     (if (< (count wall) n) ;; termination case
+       (if-let [ns (seq (filter (partial box-contains? b)
+                                (gen-neighbors p)))]
+         (let [nx (rand-nth ns)]
+           (if (contains? wall nx)
+             (recur b (rand-dla-seed b wall) (conj wall p) n)
+             (recur b nx wall n)))
+         (recur b (rand-dla-seed b wall) wall n))
+       wall)))
+
+(defn build-dla-maze
+  ([w h] (build-dla-maze w h 0.19))
+  ([w h p]
+     (let [nmax (* p w h)
+           abox { :width w :height h }
+           cell (for [x (range w) y (range h)] [x y])
+           wall (build-dla-wall abox nmax)
+           open (set/difference (set cell) wall)
+           exit (rand-nth (seq open))
+           init (rand-init w h exit open wall)]
+       { :width w :height h :exit exit :wall wall :init init })))
+
+;;
 ;; Pretty-Printing Functions
 ;;
 
@@ -144,6 +184,7 @@
 (defn build-maze [type w h]
   (case type
     :dfs  (build-dfs-maze w h)
+    :dla  (build-dla-maze w h)
     :rand (build-random-maze w h)))
 
 (def cli-options
@@ -155,10 +196,13 @@
     :default 11
     :parse-fn #(Integer/parseInt %)
     :validate [#(< 5 %) "Must be an integer greater than 5"]]
-   ["-t" "--type STR" "Generating algorithm (\"dfs\" or \"rand\")"
+   ["-t" "--type STR" "Generating algorithm (\"dfs\", \"dla\", \"rand\")"
     :default :rand
     :parse-fn #(keyword %)
-    :validate [#(or (= % :rand) (= % :dfs)) "Use \"dfs\" or \"rand\""]]
+    :validate [#(or (= % :rand)
+                    (= % :dfs)
+                    (= % :dla))
+               "Use: \"dfs\", \"dla\", or \"rand\""]]
    ["-h" "--help"]])
 
 (defn usage [options-summary]
