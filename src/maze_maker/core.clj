@@ -21,6 +21,11 @@
                       :when (= d (+ (abs dx) (abs dy)))]
                   [(+ x dx) (+ y dy)]))))
 
+(defn- gen-surrounds [[x y]]
+  (for [dx [-1 0 1] dy [-1 0 1]
+        :when (not= [0 0] [dx dy])]
+    [(+ x dx) (+ y dy)]))
+
 (defn gen-betweens
   [[x1 y1] [x2 y2]]
   (let [ymn (min y1 y2) ymx (max y1 y2)
@@ -137,7 +142,7 @@
   ([b p wall n]
      (if (< (count wall) n) ;; termination case
        (if-let [ns (seq (filter (partial box-contains? b)
-                                (gen-neighbors p)))]
+                                (gen-surrounds p)))]
          (let [nx (rand-nth ns)]
            (if (contains? wall nx)
              (recur b (rand-dla-seed b wall) (conj wall p) n)
